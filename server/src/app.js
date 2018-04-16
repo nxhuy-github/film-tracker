@@ -3,13 +3,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 
+const parser = bodyParser.urlencoded({ extended: false });
+
 const app = express();
 app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/status', (req, res) => {
-    res.send('hello word');
+app.post('/register', (req, res) => {
+    res.send({
+        message: `${req.body.email} was registed`
+    });
 });
 
 app.listen(process.env.PORT || 8082, () => {
