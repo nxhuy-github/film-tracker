@@ -2,21 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-
-const parser = bodyParser.urlencoded({ extended: false });
+const db = require('./models/index');
+const config = require('./config/config')
+const register = require('./routes/register');
 
 const app = express();
 app.use(morgan('combined'));
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/register', (req, res) => {
-    res.send({
-        message: `${req.body.email} was registed`
+app.use('/register', register);
+
+db.sequelize
+.sync()
+.then(() => {
+    app.listen(config.port, () => {
+        console.log('Server started...');
     });
 });
 
-app.listen(process.env.PORT || 8082, () => {
-    console.log('Server started...');
-});
+
+
