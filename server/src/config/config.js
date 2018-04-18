@@ -10,5 +10,8 @@ module.exports = {
             storage: './filmtracker.sqlite',
             operatorsAliases: false
         }
+    },
+    authentication: {
+        jwtSecret: process.env.JWT_SECRET || 'secret'
     }
 }
