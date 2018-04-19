@@ -3,10 +3,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 
 function jwtSignUser (user) {
-    const ONE_WEEK = 60 * 60 * 24 * 7;
+    const ONE_WEEK = 60 * 60 * 24 * 7
     return jwt.sign(user, config.authentication.jwtSecret, {
-        expiresIn: ONE_WEEK
-    });
+      expiresIn: ONE_WEEK
+    })
 }
 
 module.exports = {
@@ -14,9 +14,10 @@ module.exports = {
         try{
             const user = await User.create(req.body);
             res.send({
-                user: JSON.stringify(user)
+                user: user.toJSON()
             });
         } catch (err) {
+            console.log(err);
             res.status(400).send({
                 error: 'This email account is already in use.'
             })
@@ -30,22 +31,26 @@ module.exports = {
                     email: email
                 }
             });
-            console.log(JSON.stringify(user));
             if (!user) {
                 res.status(403).send({
                     error: 'The user information was incorrect.'
                 })
             }
-            const isPasswordValid = password === user.password;
-            if (!isPasswordValid){
-                res.status(403).send({
-                    error: 'The user information was incorrect.'
-                });
-            };
-            const userJson = JSON.stringify(user);
-            res.send({
-                user:userJson,
+            user.comparePassword(password)
+            .then(result => {
+                if (!result){
+                    res.status(403).send({
+                        error: 'The user information was incorrect.'
+                    });
+                } else{
+                    const userJson = user.toJSON();
+                    res.send({
+                        user: userJson,
+                        token: jwtSignUser(userJson)
+                    });
+                } 
             });
+            
         } catch (err) {
             res.status(500).send({
                 error: 'Invalid user information.'
