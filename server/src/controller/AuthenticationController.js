@@ -13,8 +13,10 @@ module.exports = {
     async register (req, res) {
         try{
             const user = await User.create(req.body);
+            const userJson = user.toJSON();
             res.send({
-                user: user.toJSON()
+                user: userJson,
+                token: jwtSignUser(userJson)
             });
         } catch (err) {
             console.log(err);
@@ -49,6 +51,9 @@ module.exports = {
                         token: jwtSignUser(userJson)
                     });
                 } 
+            })
+            .catch(error => {
+                console.log(error);
             });
             
         } catch (err) {

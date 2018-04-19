@@ -15,12 +15,12 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-        <v-btn flat dark to="login">
+        <v-btn v-if="$store.getters.isUserLoggedIn === false" flat dark to="login">
           Sign In
         </v-btn>
     </v-toolbar-items>
     <v-toolbar-items>
-        <v-btn flat dark to="register">
+        <v-btn v-if="$store.getters.isUserLoggedIn === false" flat dark to="register">
           Sign Up
         </v-btn>
     </v-toolbar-items>
