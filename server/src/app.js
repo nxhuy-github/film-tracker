@@ -6,6 +6,7 @@ const db = require('./models/index');
 const config = require('./config/config')
 const register = require('./routes/register');
 const login = require('./routes/login');
+const films = require('./routes/films');
 
 const app = express();
 app.use(morgan('combined'));
@@ -15,6 +16,7 @@ app.use(cors());
 
 app.use('/register', register);
 app.use('/login', login);
+app.use('/films', films);
 
 db.sequelize
 .sync({force: false})
