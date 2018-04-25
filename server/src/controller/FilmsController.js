@@ -23,5 +23,30 @@ module.exports = {
                 error: 'An error has occured! Trying to create the films'
             });
         }
+    },
+    async show (req, res) {
+        try{
+            const film = await Film.findById(req.params.filmId);
+            res.send(film);
+        } catch (err) {
+            res.status(500).send({
+                error: 'An error has occured! Trying to show the films'
+            });
+        }
+    },
+    async put (req, res) {
+        try{
+            console.log(req.body)
+            const film = await Film.update(req.body, {
+                where: {
+                    id: req.params.filmId
+                }
+            });
+            res.send(req.body);
+        } catch (err) {
+            res.status(500).send({
+                error: 'An error has occured! Trying to update the films'
+            });
+        }
     }
 }

@@ -6,4 +6,8 @@ router.get('/', FilmsController.index);
 
 router.post('/', FilmsController.post);
 
+router.get('/:filmId', FilmsController.show);
+
+router.put('/:filmId', FilmsController.put);
+
 module.exports = router

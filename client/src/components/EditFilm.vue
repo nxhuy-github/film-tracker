@@ -65,9 +65,9 @@
     <v-btn
         dark
         class="cyan"
-        @click="create"
+        @click="save"
     >
-    Create Film
+    Save Film
     </v-btn>
   </v-flex>
   </v-layout>
@@ -98,8 +98,11 @@ export default {
     Panel
   },
   methods: {
-    async create () {
+    async save () {
       this.error = null
+      delete this.film['createdAt']
+      delete this.film['updatedAt']
+      console.log(this.film)
       const areAllFieldsFilledIn = Object
         .keys(this.film)
         .every(key => !!this.film[key])
@@ -108,13 +111,25 @@ export default {
         return
       }
       try {
-        await FilmService.post(this.film)
+        await FilmService.put(this.film)
         this.$router.push({
-          name: 'films'
+          name: 'film',
+          params: {
+            filmId: this.$store.state.route.params.filmId
+          }
         })
       } catch (error) {
         console.log(error)
       }
+    }
+  },
+  async mounted () {
+    try {
+      const filmId = this.$store.state.route.params.filmId
+      const film = await FilmService.show(filmId)
+      this.film = film.data
+    } catch (error) {
+      console.log(error)
     }
   }
 }

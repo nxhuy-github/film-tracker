@@ -7,7 +7,8 @@ const Film = db.sequelize.define('Film', {
     production_company: db.Sequelize.STRING,
     posterURL: db.Sequelize.STRING,
     youtubeId: db.Sequelize.STRING,
-    starring: db.Sequelize.TEXT
+    starring: db.Sequelize.TEXT,
+    description: db.Sequelize.TEXT
 });
 
 
