@@ -14,7 +14,7 @@
         <v-btn
           dark
           class="cyan"
-          @click="navigateTo({name: 'film-edit', params: {filmId: film.id}})"
+          :to="{name: 'film-edit', params () { return {filmId: film.id} }}"
         >
         Edit
         </v-btn>
@@ -29,20 +29,11 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel'
 
 export default {
   props: [
     'film'
-  ],
-  components: {
-    Panel
-  },
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
-    }
-  }
+  ]
 }
 </script>
 

@@ -3,11 +3,32 @@ const Film = require('../models/Film');
 module.exports = {
     async index (req, res) {
         try{
-            const films = await Film.findAll({
-                limit: 10
-            });
+            let films = null;
+            const search = req.query.search;
+            if (search) {
+                films = await Film.findAll({
+                    where: {
+                        $or: [
+                            {title: {
+                                $like: `%${search}%`
+                            }}, 
+                            {genre: {
+                                $like: `%${search}%`
+                            }},
+                            {director: {
+                                $like: `%${search}%`
+                            }}
+                        ]
+                    }
+                })
+            }else{
+                films = await Film.findAll({
+                    limit: 10
+                });
+            }
             res.send(films);
         } catch (err) {
+            console.log(err.toString());
             res.status(500).send({
                 error: 'An error has occured! Trying to fetch the films'
             });

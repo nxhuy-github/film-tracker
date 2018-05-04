@@ -74,7 +74,6 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel'
 import FilmService from '@/services/FilmService'
 
 export default {
@@ -93,9 +92,6 @@ export default {
       error: null,
       required: (value) => !!value || 'Required!'
     }
-  },
-  components: {
-    Panel
   },
   methods: {
     async create () {

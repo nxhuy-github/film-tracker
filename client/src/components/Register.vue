@@ -14,7 +14,7 @@
           ></v-text-field>
           <br>
           <div
-            class="error"
+            class="danger-alert"
             v-html="error"
           />
           <v-btn dark
@@ -30,7 +30,6 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
-import Panel from '@/components/Panel'
 
 export default {
   name: 'register',
@@ -55,16 +54,10 @@ export default {
         this.error = error.response.data.error
       }
     }
-  },
-  components: {
-    Panel
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.error {
-  color: red
-}
 </style>

@@ -9,15 +9,11 @@
 </template>
 
 <script>
-import Panel from '@/components/Panel'
 
 export default {
   props: [
     'starring'
-  ],
-  components: {
-    Panel
-  }
+  ]
 }
 </script>
 

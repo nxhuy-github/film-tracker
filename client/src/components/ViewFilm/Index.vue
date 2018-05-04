@@ -21,7 +21,6 @@
 
 <script>
 import FilmService from '@/services/FilmService'
-import Panel from '@/components/Panel'
 import FilmMetadata from './FilmMetadata'
 import YoutubeView from './YoutubeView'
 import Starring from './Starring'
@@ -34,7 +33,6 @@ export default {
     }
   },
   components: {
-    Panel,
     FilmMetadata,
     YoutubeView,
     Starring,

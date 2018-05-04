@@ -1,9 +1,7 @@
 <template>
-  <v-layout>
-    <v-flex xs6 offset-xs3>
       <panel title="Films">
         <v-btn fab class="cyan accent-2" light small absolute right middle slot="action"
-        @click="navigateTo({name: 'films-create'})">
+        :to="{name: 'films-create'}">
           <v-icon>add</v-icon>
         </v-btn>
         <div class="film" v-for="film in films" :key="film.id">
@@ -21,7 +19,7 @@
               <v-btn
                 dark
                 class="cyan"
-                @click="navigateTo({name: 'film', params: {filmId: film.id}})"
+                :to="{name: 'film', params: {filmId: film.id}}"
               >
               View
               </v-btn>
@@ -32,12 +30,9 @@
           </v-layout>
         </div>
       </panel>
-    </v-flex>
-  </v-layout>
 </template>
 
 <script>
-import Panel from '@/components/Panel'
 import FilmService from '@/services/FilmService'
 
 export default {
@@ -46,16 +41,12 @@ export default {
       films: null
     }
   },
-  components: {
-    Panel
-  },
-  async mounted () {
-    const films = await FilmService.index()
-    this.films = films.data
-  },
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (value) {
+        this.films = (await FilmService.index(value)).data
+      }
     }
   }
 }
